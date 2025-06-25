@@ -29,7 +29,7 @@ def initialize_components():
     embedding_extractor = EmbeddingExtractor()
     
     # Get pretrained ResNet50 model
-    resnet50_model = model_manager.get_model('resnet50_pretrained')
+    resnet50_model = model_manager.get_model('resnet50')
     
     return model_manager, vector_search, embedding_extractor, resnet50_model
 

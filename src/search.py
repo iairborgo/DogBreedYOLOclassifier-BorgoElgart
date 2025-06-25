@@ -11,7 +11,7 @@ from torchvision import transforms
 class VectorSearch:
     """Vector similarity search using ChromaDB"""
     
-    def __init__(self, chroma_path='data/chroma'):
+    def __init__(self, chroma_path='data/chroma/chroma/content/chroma'):
         self.client = chromadb.PersistentClient(path=chroma_path)
         self.collections = {}
         self._load_collections()
@@ -121,7 +121,13 @@ class VectorSearch:
         similar_images = []
         
         try:
-            for filepath in results['documents'][0]:
+            for original_filepath in results['documents'][0]:
+
+                # Fix for old stored paths
+                parts = original_filepath.split('/')
+                breed = parts[-2]
+                filename = parts[-1]
+                filepath = f"data/images/{breed}/{filename}"
                 try:
                     img = Image.open(filepath)
                     similar_images.append(img)
