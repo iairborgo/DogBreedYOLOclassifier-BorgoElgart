@@ -8,12 +8,15 @@ import sys
 import os
 import tempfile
 from PIL import Image
+import torch
 
 # Add parent directory to path to import src modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.models import ModelManager
 from src.detection import DogDetectionClassifier
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 def initialize_components():
@@ -24,7 +27,7 @@ def initialize_components():
     
     # Get required models
     yolo_model = model_manager.get_model('yolo')
-    classifier_model = model_manager.get_model('transfer_full')  # Best model from Stage 2
+    classifier_model = model_manager.get_model('transfer')  # Best model from Stage 2
     label_encoder = model_manager.get_label_encoder()
     
     # Initialize detection pipeline
@@ -32,7 +35,7 @@ def initialize_components():
         yolo_model=yolo_model,
         classifier_model=classifier_model,
         label_encoder=label_encoder,
-        device='cuda'
+        device=device
     )
     
     return detection_pipeline
@@ -47,7 +50,7 @@ def process_complete_image(image_input, confidence_threshold=0.5):
     
     try:
         # Process image with detection pipeline
-        processed_image = detection_pipeline.detect_and_classify(
+        processed_image, _ = detection_pipeline.detect_and_classify(
             image_input, 
             confidence_threshold=confidence_threshold
         )
@@ -68,7 +71,7 @@ def process_detection_only(image_input, confidence_threshold=0.5):
     
     try:
         # Process image with detection only
-        processed_image = detection_pipeline.detect_only(
+        processed_image, _ = detection_pipeline.detect_only(
             image_input,
             confidence_threshold=confidence_threshold
         )

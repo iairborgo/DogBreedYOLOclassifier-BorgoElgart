@@ -45,7 +45,7 @@ class DogDetectionClassifier:
         
         # Prepare for drawing
         draw = ImageDraw.Draw(img)
-        font = ImageFont.load_default(40)
+        font = ImageFont.load_default(30)
         
         detection_results = []
         
@@ -74,8 +74,26 @@ class DogDetectionClassifier:
                     # Draw bounding box and label
                     draw.rectangle([x1, y1, x2, y2], outline="green", width=3)
                     label_text = f"{breed} ({confidence:.2f})"
-                    draw.text((x1, y1 - 40), label_text, fill="green", font=font)
-        
+                    
+                    # Get the bounding box of the text
+                    bbox = draw.textbbox((x1, y1), label_text, font=font)
+                    text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+                    
+                    # Ensure the text does not go out of bounds
+                    label_x = x1
+                    label_y = y1 - text_height - 5
+                    
+                    # If the label goes out of bounds on the right
+                    if label_x + text_width > img.width:
+                        label_x = img.width - text_width - 5
+                    
+                    # If the label goes above the image
+                    if label_y < 0:
+                        label_y = y1 + 5
+                    
+                    # Draw label text
+                    draw.text((label_x, label_y), label_text, fill="green", font=font)
+
         return img, detection_results
     
     def _classify_breed(self, cropped_image):

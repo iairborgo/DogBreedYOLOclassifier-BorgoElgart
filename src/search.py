@@ -128,6 +128,7 @@ class VectorSearch:
                 breed = parts[-2]
                 filename = parts[-1]
                 filepath = f"data/images/{breed}/{filename}"
+                
                 try:
                     img = Image.open(filepath)
                     similar_images.append(img)

@@ -7,6 +7,7 @@ import gradio as gr
 import sys
 import os
 from PIL import Image
+import torch
 
 # Add parent directory to path to import src modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -43,12 +44,13 @@ def search_with_selected_model(image_input, model_selected):
         return "Por favor, sube una imagen primero.", [], ""
     
     try:
+        device = 'cuda' if torch.cuda.is_available() else 'cpu'
         if model_selected == "Modelo Custom":
             # Search using custom model
             results = vector_search.search_with_custom_model(
                 image_input,
                 custom_model,
-                device='cuda',
+                device=device,
                 n_results=10
             )
         else:  # ResNet18 Transfer Learning
@@ -56,7 +58,7 @@ def search_with_selected_model(image_input, model_selected):
             results = vector_search.search_with_transfer_model(
                 image_input,
                 transfer_model,
-                device='cuda',
+                device=device,
                 n_results=10
             )
         
