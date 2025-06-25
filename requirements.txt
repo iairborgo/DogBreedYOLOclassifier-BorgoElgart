@@ -1,0 +1,12 @@
+chromadb==1.0.13
+fiftyone==1.6.0
+fiftyone_brain==0.21.2
+fiftyone_db==1.1.7
+gradio==5.34.2
+numpy==2.3.1
+Pillow==11.2.1
+scikit_learn==1.7.0
+torch==2.7.1
+torchvision==0.22.1
+tqdm==4.67.1
+ultralytics==8.3.159
