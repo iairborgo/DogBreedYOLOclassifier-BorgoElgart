@@ -11,6 +11,8 @@ from PIL import Image
 from tqdm import tqdm
 import json
 
+#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 # Import project modules
 from src.models import ModelManager
 from src.detection import DogDetectionClassifier
@@ -63,8 +65,8 @@ def process_images(image_files, detection_pipeline, confidence_threshold=0.5):
             image = Image.open(image_path).convert('RGB')
             
             # Get detections using batch processing capability
-            detections = detection_pipeline.detect_and_classify(
-                image_path,
+            processed_image, detections = detection_pipeline.detect_and_classify(
+                image,
                 confidence_threshold=confidence_threshold
             )
             
@@ -73,7 +75,7 @@ def process_images(image_files, detection_pipeline, confidence_threshold=0.5):
             detections_dict[relative_path] = {
                 'image_path': str(image_path),
                 'image_size': image.size,  # (width, height)
-                'detections': detections
+                'detections': detections   # <-- Only the list, not the tuple
             }
             
         except Exception as e:
@@ -91,7 +93,7 @@ def main():
                        help='Confidence threshold for detections (default: 0.5)')
     parser.add_argument('--format', type=str, choices=['yolo', 'coco', 'both'], default='both',
                        help='Output format (default: both)')
-    parser.add_argument('--device', type=str, choices=['cuda', 'cpu'], default='cuda',
+    parser.add_argument('--device', type=str, choices=['cuda', 'cpu'], default='cpu',
                        help='Device to use for inference (default: cuda)')
     
     args = parser.parse_args()
@@ -125,7 +127,7 @@ def main():
         
         # Get required models
         yolo_model = model_manager.get_model('yolo')
-        classifier_model = model_manager.get_model('transfer_full')
+        classifier_model = model_manager.get_model('transfer')
         label_encoder = model_manager.get_label_encoder()
         
         # Initialize detection pipeline
@@ -165,13 +167,13 @@ def main():
         
         if args.format in ['yolo', 'both']:
             print("Exporting YOLO format...")
-            annotation_exporter.export_yolo_format(detections_dict, str(yolo_dir))
+            annotation_exporter.export_yolo_format(detections_dict, str(yolo_dir), parent_folder=args.input_folder)
             print(f"YOLO annotations saved to: {yolo_dir}")
         
         if args.format in ['coco', 'both']:
             print("Exporting COCO format...")
             coco_file = coco_dir / "annotations.json"
-            annotation_exporter.export_coco_format(detections_dict, str(coco_file))
+            annotation_exporter.export_coco_format(detections_dict, str(coco_file), parent_folder=args.input_folder)
             print(f"COCO annotations saved to: {coco_file}")
         
         # Generate summary

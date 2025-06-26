@@ -7,6 +7,7 @@ from datetime import datetime
 from PIL import Image
 
 
+
 class AnnotationExporter:
     """Export annotations in YOLO and COCO formats"""
     
@@ -14,7 +15,7 @@ class AnnotationExporter:
         self.label_encoder = label_encoder
         self.class_mapping = {breed: idx for idx, breed in enumerate(label_encoder.classes_)}
         
-    def export_yolo_format(self, detections_dict, output_folder):
+    def export_yolo_format(self, detections_dict, output_folder, parent_folder=None):
         """
         Export annotations in YOLO format (.txt files)
         
@@ -27,6 +28,7 @@ class AnnotationExporter:
         for image_path, results in detections_dict.items():
             # Get image dimensions
             try:
+                image_path = os.path.join(parent_folder, image_path) if parent_folder else image_path
                 with Image.open(image_path) as img:
                     img_width, img_height = img.size
             except Exception as e:
@@ -64,7 +66,7 @@ class AnnotationExporter:
         
         print(f"YOLO annotations exported to {output_folder}")
         
-    def export_coco_format(self, detections_dict, output_file):
+    def export_coco_format(self, detections_dict, output_file, parent_folder=None):
         """
         Export annotations in COCO format (.json file)
         
@@ -101,6 +103,7 @@ class AnnotationExporter:
         for image_path, results in detections_dict.items():
             # Get image info
             try:
+                image_path = os.path.join(parent_folder, image_path) if parent_folder else image_path
                 with Image.open(image_path) as img:
                     img_width, img_height = img.size
             except Exception as e:

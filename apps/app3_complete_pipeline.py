@@ -71,11 +71,11 @@ def process_detection_only(image_input, confidence_threshold=0.5):
     
     try:
         # Process image with detection only
-        processed_image, _ = detection_pipeline.detect_only(
+        processed_image = detection_pipeline.detect_only(
             image_input,
             confidence_threshold=confidence_threshold
         )
-        
+        print(processed_image)
         message = "✅ Detección completada: Se detectaron perros (sin clasificación)"
         return message, processed_image
         
