@@ -64,7 +64,7 @@ class AnnotationExporter:
             for breed in self.label_encoder.classes_:
                 f.write(f"{breed}\n")
         
-        print(f"YOLO annotations exported to {output_folder}")
+        print(f"anotaciones YOLO exportadas a {output_folder}")
         
     def export_coco_format(self, detections_dict, output_file, parent_folder=None):
         """
@@ -158,7 +158,7 @@ class AnnotationExporter:
         with open(output_file, 'w') as f:
             json.dump(coco_data, f, indent=2)
         
-        print(f"COCO annotations exported to {output_file}")
+        print(f"anotaciones COCO exportadas a {output_file}")
         
     def export_both_formats(self, detections_dict, output_folder):
         """Export annotations in both YOLO and COCO formats"""
@@ -170,9 +170,9 @@ class AnnotationExporter:
         self.export_yolo_format(detections_dict, yolo_folder)
         self.export_coco_format(detections_dict, coco_file)
         
-        print(f"Annotations exported to {output_folder}")
-        print(f"  - YOLO format: {yolo_folder}")
-        print(f"  - COCO format: {coco_file}")
+        print(f"Anotaciones en {output_folder}")
+        print(f"  - YOLO: {yolo_folder}")
+        print(f"  - COCO: {coco_file}")
 
 
 def create_annotation_exporter(label_encoder):

@@ -11,7 +11,7 @@ from torchvision import transforms
 class VectorSearch:
     """Vector similarity search using ChromaDB"""
     
-    def __init__(self, chroma_path='data/chroma/chroma/content/chroma'):
+    def __init__(self, chroma_path='data/chroma/content/chroma'):
         self.client = chromadb.PersistentClient(path=chroma_path)
         self.collections = {}
         self._load_collections()
