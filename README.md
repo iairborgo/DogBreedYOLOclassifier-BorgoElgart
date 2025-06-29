@@ -1,6 +1,6 @@
-# Dog Breed Classification Pipeline
+# Pipeline Clasificacion de Razas
 
-## Project Structure
+## Estructura del proyecto
 
 ```
 COMPUTERVISION-TPFINAL-BORGOELGART/
