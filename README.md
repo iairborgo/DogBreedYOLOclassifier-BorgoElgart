@@ -26,6 +26,7 @@ COMPUTERVISION-TPFINAL-BORGOELGART/
 │   ├── app2_embedding_comparison.py
 │   └── app3_complete_pipeline.py
 └── auto_annotate.py
+└── prepare_project.py
 ```
 
 ## Instalacion
