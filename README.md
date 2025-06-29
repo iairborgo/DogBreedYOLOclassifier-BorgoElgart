@@ -17,7 +17,6 @@ COMPUTERVISION-TPFINAL-BORGOELGART/
 ├── src/
 │   ├── __init__.py
 │   ├── models.py
-│   ├── embeddings.py
 │   ├── search.py
 │   ├── detection.py
 │   └── annotations.py
@@ -63,22 +62,11 @@ python apps/app3_complete_pipeline.py
 
 ### Script con Anotaciones Automaticas
 ```bash
-python auto_annotate.py --input_folder /path/to/images --output_folder /path/to/annotations
+python auto_annotate.py /path/to/images /path/to/output
 ```
 Este tiene 3 parametros opcionales
 - --confidence: para cambiar el % de confianza con el queres que YOLO detecte los bounding box
 - --format [yolo, coco, both]: Dependiendo que formato queres que se 
 - --device [cuda, cpu]
 
-## Features
 
-- **Similarity Search**: Find similar dog images using ResNet50 embeddings
-- **Custom vs Transfer Learning**: Compare embeddings from custom CNN vs ResNet18
-- **Complete Pipeline**: YOLO detection + breed classification
-- **Auto-annotation**: Batch processing with YOLO and COCO format export
-
-## Model Performance
-
-- **NDCG@10**: 0.9635 (validation set)
-- **Transfer Learning Model**: Best accuracy on validation
-- **ONNX Optimization**: ~100% speed improvement for YOLO inference
