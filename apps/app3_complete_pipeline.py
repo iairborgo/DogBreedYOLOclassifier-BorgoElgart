@@ -18,7 +18,6 @@ from src.detection import DogDetectionClassifier
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-
 def initialize_components():
     """Initialize all required components for the app"""
     # Initialize model manager

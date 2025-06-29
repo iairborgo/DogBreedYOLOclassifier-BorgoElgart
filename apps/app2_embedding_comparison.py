@@ -14,7 +14,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.models import ModelManager
 from src.search import VectorSearch
-from src.embeddings import EmbeddingExtractor
 
 
 def initialize_components():
@@ -26,14 +25,11 @@ def initialize_components():
     # Initialize vector search
     vector_search = VectorSearch()
     
-    # Initialize embedding extractor
-    embedding_extractor = EmbeddingExtractor()
-    
     # Get models
     custom_model = model_manager.get_model('custom_embedding')
     transfer_model = model_manager.get_model('transfer_embedding')
     
-    return model_manager, vector_search, embedding_extractor, custom_model, transfer_model
+    return model_manager, vector_search, custom_model, transfer_model
 
 
 def search_with_selected_model(image_input, model_selected):
@@ -80,7 +76,7 @@ def search_with_selected_model(image_input, model_selected):
 
 # Initialize components
 try:
-    model_manager, vector_search, embedding_extractor, custom_model, transfer_model = initialize_components()
+    model_manager, vector_search, custom_model, transfer_model = initialize_components()
 except Exception as e:
     print(f"Error initializing components: {e}")
     print("Make sure you have extracted chroma.zip and have all model files in data/models/")
