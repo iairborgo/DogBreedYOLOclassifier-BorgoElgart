@@ -13,7 +13,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from src.models import ModelManager
 from src.search import VectorSearch
-from src.embeddings import EmbeddingExtractor
 
 
 def initialize_components():
@@ -26,12 +25,11 @@ def initialize_components():
     vector_search = VectorSearch()
     
     # Initialize embedding extractor
-    embedding_extractor = EmbeddingExtractor()
     
     # Get pretrained ResNet50 model
     resnet50_model = model_manager.get_model('resnet50')
     
-    return model_manager, vector_search, embedding_extractor, resnet50_model
+    return model_manager, vector_search, resnet50_model
 
 
 def search_similar_images(image_input):
@@ -74,7 +72,7 @@ def create_gallery_images(images):
 
 # Initialize components
 try:
-    model_manager, vector_search, embedding_extractor, resnet50_model = initialize_components()
+    model_manager, vector_search, resnet50_model = initialize_components()
 except Exception as e:
     print(f"Error initializing components: {e}")
     print("Make sure you have extracted chroma.zip and have all model files in data/models/")

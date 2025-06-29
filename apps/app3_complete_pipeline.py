@@ -27,7 +27,7 @@ def initialize_components():
     
     # Get required models
     yolo_model = model_manager.get_model('yolo')
-    classifier_model = model_manager.get_model('transfer')  # Best model from Stage 2
+    classifier_model = model_manager.get_model('transfer')
     label_encoder = model_manager.get_label_encoder()
     
     # Initialize detection pipeline
@@ -75,7 +75,7 @@ def process_detection_only(image_input, confidence_threshold=0.5):
             image_input,
             confidence_threshold=confidence_threshold
         )
-        print(processed_image)
+        
         message = "✅ Detección completada: Se detectaron perros (sin clasificación)"
         return message, processed_image
         

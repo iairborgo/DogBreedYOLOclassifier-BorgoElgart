@@ -3,7 +3,7 @@
 ## Project Structure
 
 ```
-dog-breed-classification/
+COMPUTERVISION-TPFINAL-BORGOELGART/
 ├── README.md
 ├── requirements.txt
 ├── data/
@@ -29,40 +29,46 @@ dog-breed-classification/
 └── auto_annotate.py
 ```
 
-## Installation
+## Instalacion
 
-1. Clone the repository
-2. Install dependencies:
+1. Clonar repositorio
+2. Instalar dependencias:
    ```bash
    pip install -r requirements.txt
    ```
-3. Extract the database:
+3. Moverse hasta la carpeta del proyecto
+4. Ejecutar el script de descarga de datos:
    ```bash
-   cd data/chroma
-   unzip chroma.zip
+   python prepare_project.py
    ```
 
-## Usage
+## Uso
 
-### Similarity Search App (Stage 1)
+### ES IMPORTANTE EJECUTARLO DESDE LA CARPETA RAIZ
+
+### App Busqueda Similitud Vectorial (Etapa 1)
 ```bash
 python apps/app1_similarity_search.py
 ```
 
-### Embedding Comparison App (Stage 2)
+### App Embeddings (Etapa 2)
 ```bash
 python apps/app2_embedding_comparison.py
 ```
 
-### Complete Pipeline App (Stage 3)
+### App Pipeline YOLO (Stage 3)
 ```bash
 python apps/app3_complete_pipeline.py
 ```
 
-### Auto-annotation Script
+### Script con Anotaciones Automaticas
 ```bash
 python auto_annotate.py --input_folder /path/to/images --output_folder /path/to/annotations
 ```
+Este tiene 3 parametros opcionales
+- --confidence: para cambiar el % de confianza con el queres que YOLO detecte los bounding box
+- --format [yolo, coco, both]: Dependiendo que formato queres que se 
+- --device [cuda, cpu]
 
 ## Features
 
