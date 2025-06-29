@@ -144,31 +144,3 @@ class DogDetectionClassifier:
                     })
         
         return detection_results
-    
-    def batch_process(self, image_paths, confidence_threshold=0.5):
-        """Process multiple images"""
-        results = {}
-        
-        for image_path in image_paths:
-            try:
-                processed_img, detections = self.detect_and_classify(
-                    image_path, confidence_threshold
-                )
-                results[image_path] = {
-                    'processed_image': processed_img,
-                    'detections': detections
-                }
-            except Exception as e:
-                print(f"Error processing {image_path}: {e}")
-                results[image_path] = {
-                    'processed_image': None,
-                    'detections': [],
-                    'error': str(e)
-                }
-        
-        return results
-
-
-def create_detection_pipeline(yolo_model, classifier_model, label_encoder, device='cuda'):
-    """Factory function to create detection pipeline"""
-    return DogDetectionClassifier(yolo_model, classifier_model, label_encoder, device)

@@ -173,8 +173,3 @@ class AnnotationExporter:
         print(f"Anotaciones en {output_folder}")
         print(f"  - YOLO: {yolo_folder}")
         print(f"  - COCO: {coco_file}")
-
-
-def create_annotation_exporter(label_encoder):
-    """Factory function to create annotation exporter"""
-    return AnnotationExporter(label_encoder)
